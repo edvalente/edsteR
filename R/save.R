@@ -11,11 +11,11 @@ write_compressed <- function(df, path, compress='xz'){
   file_ext <- paste(path, '.', compress, sep='')
   if(compress == 'xz'){
     to_xz <- xzfile(file_ext, "w")
-    utils::write.csv(df, to_xz)
+    utils::write.csv(df, to_xz, fileEncoding="UTF-8")
     close(to_xz)
   } else {
     to_gz <- gzfile(file_ext, "w")
-    utils::write.csv(df, to_gz)
+    utils::write.csv(df, to_gz, fileEncoding="UTF-8")
     close(to_gz)
   }
 }
