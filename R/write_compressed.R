@@ -8,14 +8,12 @@
 #' @return NULL
 #' @export
 write_compressed <- function(df, path, compress='xz'){
-  file_ext <- paste(path, '.', compress, sep='')
-  if(compress == 'xz'){
-    to_xz <- xzfile(file_ext, "w")
-    utils::write.csv(df, to_xz, fileEncoding="UTF-8", row.names=FALSE)
-    close(to_xz)
+  file_ext <- paste(path, compress, sep='.')
+  file <- if (compress == 'xz') {
+    xzfile(file_ext, "w")
   } else {
-    to_gz <- gzfile(file_ext, "w")
-    utils::write.csv(df, to_gz, fileEncoding="UTF-8", row.names=FALSE)
-    close(to_gz)
+    gzfile(file_ext, "w")
   }
+  utils::write.csv(df, file, fileEncoding="UTF-8", row.names=FALSE)
+  close(file)
 }
